@@ -1,23 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import AddUserRefs from './components/AddUser/AddUserRefs';
+import UserDisplay from './components/UserList/UserDisplay'
+import styles from './components/UserList/UserDisplay.module.css'
 
-function App() {
+function App(props) {
+const [userList, setUserList] = useState([]);
+
+const onAddUserSuccessHandler = (uName,uAge)=>{
+  setUserList(prevUserList=>{
+    console.log(userList)
+    return [{userName:uName, age:uAge, id:Math.random().toLocaleString()}, ...prevUserList]
+    
+  })
+}
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AddUserRefs onChange={onAddUserSuccessHandler}/>
+      <UserDisplay users={userList}  className={styles.users}/>
     </div>
   );
 }
